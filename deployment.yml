@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-hello
+  labels:
+    app: node-hello
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-hello
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: node-hello
+    spec:
+      containers:
+      - name: node-hello
+        image: harry671003/node-hello:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
